@@ -68,7 +68,7 @@ public class startApp extends Assets {
 	 * @param args
 	 * @param callback
 	 */
-	private void receiver(JSONArray args, CallbackContext callback) {
+	private void receiver(JSONArray args, final CallbackContext callback) {
 		BroadcastReceiver receiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -102,7 +102,7 @@ public class startApp extends Assets {
 				filter.addAction(values.getString(i));
 			}
 
-			cordova.getContext().registerReceiver(receiver, filter);
+			cordova.getActivity().registerReceiver(receiver, filter);
 			broadcastReceiverHashMap.put(receiver.hashCode(), receiver);
 
 			PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, receiver.hashCode());
@@ -305,7 +305,7 @@ public class startApp extends Assets {
 					PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
 					
 					// get package info
-					PackageInfo PackInfo = pm.getPackageInfo(params.getString("package"), PackageManager.GET_ACTIVITIES);
+					final PackageInfo PackInfo = pm.getPackageInfo(params.getString("package"), PackageManager.GET_ACTIVITIES);
 						
 					// create json object
 					JSONObject info = new JSONObject() {{
